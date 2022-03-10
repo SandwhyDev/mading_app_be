@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Users{
+  id                          Int         @id @default(autoincrement())
+  uuid                        String      @unique
+  email                       String      @unique
+  password                    String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  biodata                     Biodatas?
+  avatar                      Avatars?
+  mading                      Madings[]
+  like                        Likes[]
+  comment                     Comments[]
+  reply                       Replies[]
+}
+
+model Biodatas{
+  id                          Int         @id @default(autoincrement())
+  user_id                     String
+  fullname                    String
+  dob                         DateTime
+  address                     String
+  phone                       String      @unique
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  user                       Users        @relation(fields: [user_id], references: [uuid], onDelete: Cascade)
+}
+
+model Avatars{
+  id                          Int         @id @default(autoincrement())
+  user_id                     String
+  path                        String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  user                        Users       @relation(fields: [user_id], references: [uuid], onDelete: Cascade)
+}
+
+model Madings{
+  id                          Int         @id @default(autoincrement())
+  user_id                     String
+  content                     String
+  image                       String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  user                        Users       @relation(fields: [user_id], references: [uuid], onDelete: Cascade)
+  like                        Likes[]
+  comment                     Comments[]
+}
+
+model Likes{
+  id                          Int         @id @default(autoincrement())
+  mading_id                   Int
+  user_id                     String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  mading                      Madings     @relation(fields: [mading_id], references: [id], onDelete: Cascade)
+  user                        Users       @relation(fields: [user_id], references: [uuid])
+}
+
+model Comments{
+  id                          Int         @id @default(autoincrement())
+  mading_id                   Int
+  user_id                     String
+  message                     String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  mading                      Madings     @relation(fields: [mading_id], references: [id], onDelete: Cascade)
+  user                        Users       @relation(fields: [user_id], references: [uuid])
+  reply                       Replies[]
+}
+
+model Replies{
+  id                          Int         @id @default(autoincrement())
+  comment_id                  Int
+  user_id                     String
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
+
+  //relation
+  comment                     Comments    @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  user                        Users       @relation(fields: [user_id], references: [uuid])
+}

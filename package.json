@@ -1,0 +1,35 @@
+{
+	"name": "mading_app_be",
+	"version": "1.0.0",
+	"description": "backend service mading app",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon server.js --watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SandwhyDev/mading_app_be.git"
+	},
+	"author": "sandy",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/SandwhyDev/mading_app_be/issues"
+	},
+	"homepage": "https://github.com/SandwhyDev/mading_app_be#readme",
+	"dependencies": {
+		"@prisma/client": "^3.10.0",
+		"bcryptjs": "^2.4.3",
+		"cloudinary": "^1.28.1",
+		"cors": "^2.8.5",
+		"crypto-js": "^4.1.1",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.3",
+		"jsonwebtoken": "^8.5.1",
+		"jvalley-sleep": "^1.0.0",
+		"moment": "^2.29.1",
+		"multer": "^1.4.4",
+		"prisma": "^3.10.0",
+		"uuid": "^8.3.2"
+	}
+}
